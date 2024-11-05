@@ -15,6 +15,7 @@ public class OptionsComponent extends JComponent {
     private final JComboBox<AlgorithmItem> optionsComboBox;
     private final JPanel radioPanel;
     private final ButtonGroup radioGroup;
+    private final OutputItems outputItems;
 
     private final Map<Algorithm, Option[]> optionsMap = MyUtil.getAlgorithmOptions();
     private final Map<Option, JRadioButton> optionsButtonsMap;
@@ -22,9 +23,10 @@ public class OptionsComponent extends JComponent {
     private Algorithm selectedAlgorithm;
     private Option selectedOption;
 
-    public OptionsComponent(final JLabel descriptionLabel, final JPanel radioPanel) {
+    public OptionsComponent(final JLabel descriptionLabel, final JPanel radioPanel, OutputItems outputItems) {
         setLayout(new FlowLayout());
         this.radioPanel = radioPanel;
+        this.outputItems = outputItems;
         radioGroup = new ButtonGroup();
 
         optionsButtonsMap = new HashMap<>();
@@ -38,8 +40,15 @@ public class OptionsComponent extends JComponent {
         optionsComboBox = new JComboBox<>(MyUtil.getAllAlgorithmNames());
         optionsComboBox.addActionListener(e -> {
             AlgorithmItem selected = (AlgorithmItem) optionsComboBox.getSelectedItem();
+
             assert selected != null;
-            selectedAlgorithm = selected.getAlgorithm();
+            if (selected.getAlgorithm() != selectedAlgorithm) {
+                outputItems.outputTextArea.setText("");
+                outputItems.exportButton.setEnabled(false);
+                outputItems.swapButton.setEnabled(false);
+                selectedAlgorithm = selected.getAlgorithm();
+            }
+
             descriptionLabel.setText(selected.getDescription());
             updateRadioPanel();
         });

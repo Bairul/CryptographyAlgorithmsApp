@@ -12,17 +12,13 @@ public class ProcessButtonListener implements ActionListener {
     private final JTextArea messageTextField;
     private final JTextArea keyTextField;
     private final OptionsComponent optionsDropdown;
-    private final JTextArea outputTextArea;
-    private final JButton exportButton;
-    private final JButton swapButton;
+    private final OutputItems outputItems;
 
-    public ProcessButtonListener(JTextArea messageTextField, JTextArea keyTextField, OptionsComponent optionsDropdown, JTextArea outputTextArea, JButton exportButton, JButton swapButton) {
+    public ProcessButtonListener(JTextArea messageTextField, JTextArea keyTextField, OptionsComponent optionsDropdown, OutputItems outputItems) {
         this.messageTextField = messageTextField;
         this.keyTextField = keyTextField;
         this.optionsDropdown = optionsDropdown;
-        this.outputTextArea = outputTextArea;
-        this.exportButton = exportButton;
-        this.swapButton = swapButton;
+        this.outputItems = outputItems;
     }
 
     @Override
@@ -41,9 +37,12 @@ public class ProcessButtonListener implements ActionListener {
         // Process input (this can be customized)
         String outputText = CryptoProcessor.process(optionsDropdown.getSelectedAlgorithm(), optionsDropdown.getSelectedOption(), keyText, messageText);
 
-        // Display output and enable export button
-        outputTextArea.setText(outputText);
-        exportButton.setEnabled(true);
-        swapButton.setEnabled(true);
+        if (outputText == null) {
+            JOptionPane.showMessageDialog(null, "[Invalid Inputs]", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            outputItems.outputTextArea.setText(outputText);
+            outputItems.exportButton.setEnabled(true);
+            outputItems.swapButton.setEnabled(true);
+        }
     }
 }

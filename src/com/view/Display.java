@@ -9,17 +9,12 @@ public class Display extends JFrame {
     private final JTextArea messageTextField;
     private final JTextArea keyTextField;
     private final JTextArea outputTextArea;
-    private final OptionsComponent dropdownPanel;
     private final JPanel radioPanel;
     private final JLabel dropdownDescription;
+    private OptionsComponent dropdownPanel;
 
     public Display() {
-        setTitle("Cryptography");
-        setSize(1000, 800);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setLayout(new BorderLayout());
+        init();
 
         messageTextField = new JTextArea();
         keyTextField = new JTextArea();
@@ -27,14 +22,22 @@ public class Display extends JFrame {
         dropdownDescription = new JLabel();
         radioPanel = new JPanel();
         radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.X_AXIS));
-        dropdownPanel = new OptionsComponent(dropdownDescription, radioPanel);
 
         // Add panels to frame
+        add(setUpBottomPanel(), BorderLayout.SOUTH);
         add(setUpInputPanel(), BorderLayout.NORTH);
         add(setUpOutputPanel(), BorderLayout.CENTER);
-        add(setUpBottomPanel(), BorderLayout.SOUTH);
 
         setVisible(true);
+    }
+
+    private void init() {
+        setTitle("Cryptography");
+        setSize(1000, 800);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setLayout(new BorderLayout());
     }
 
     private JPanel setUpBottomPanel() {
@@ -46,7 +49,10 @@ public class Display extends JFrame {
         exportButton.setEnabled(false);
         swapButton.setEnabled(false);
 
-        processButton.addActionListener(new ProcessButtonListener(messageTextField, keyTextField, dropdownPanel, outputTextArea, exportButton, swapButton));
+        OutputItems outputItems = new OutputItems(outputTextArea, exportButton, swapButton);
+        dropdownPanel = new OptionsComponent(dropdownDescription, radioPanel, outputItems);
+
+        processButton.addActionListener(new ProcessButtonListener(messageTextField, keyTextField, dropdownPanel, outputItems));
         exportButton.addActionListener(new ExportFileButtonListener(outputTextArea));
         swapButton.addActionListener(e -> {
             messageTextField.setText(outputTextArea.getText());

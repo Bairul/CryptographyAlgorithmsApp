@@ -44,7 +44,7 @@ public final class MyUtil {
 
         // Caesar
         map.put(Algorithm.CAESAR_CIPHER, new Option[] {Option.ENCRYPT, Option.DECRYPT});
-        map.put(Algorithm.VIGENERE_CIPHER, new Option[] {Option.SIGN, Option.VERIFY});
+        map.put(Algorithm.VIGENERE_CIPHER, new Option[] {Option.ENCRYPT, Option.DECRYPT});
         map.put(Algorithm.VERNAM_CIPHER, new Option[] {Option.ENCRYPT_EC, Option.DECRYPT_EC, Option.SIGN, Option.VERIFY});
         map.put(Algorithm.ONE_TIME_PAD, new Option[] {Option.MAC, Option.GEN_KEYPAIR});
 

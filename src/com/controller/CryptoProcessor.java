@@ -24,14 +24,10 @@ public final class CryptoProcessor {
         String cryptogram = null;
 
         switch (alg) {
-            case CAESAR_CIPHER -> cryptogram = CaesarCipher.encrypt(convertToNumericKey(key), plainText);
-            case VIGENERE_CIPHER -> cryptogram = VigenereCipher.encrypt(plainText);
+            case CAESAR_CIPHER -> cryptogram = tryConvertToNumericKey(key) ? CaesarCipher.encrypt(convertToNumericKey(key), plainText) : null;
+            case VIGENERE_CIPHER -> cryptogram = tryConvertNumberKeySet(key) ? VigenereCipher.encrypt(convertToNumericKeySet(key), plainText) : null;
             case VERNAM_CIPHER -> cryptogram = VernamCipher.encrypt(plainText);
             case ONE_TIME_PAD -> cryptogram = OneTimePad.encrypt(plainText);
-        }
-
-        if (cryptogram == null) {
-            cryptogram = "![Error in Encryption]!";
         }
 
         return cryptogram;
@@ -41,14 +37,10 @@ public final class CryptoProcessor {
         String message = null;
 
         switch (alg) {
-            case CAESAR_CIPHER -> message = CaesarCipher.decrypt(convertToNumericKey(key), cipherText);
-            case VIGENERE_CIPHER -> message = VigenereCipher.encrypt(cipherText);
+            case CAESAR_CIPHER -> message = tryConvertToNumericKey(key) ? CaesarCipher.decrypt(convertToNumericKey(key), cipherText) : null;
+            case VIGENERE_CIPHER -> message = tryConvertNumberKeySet(key) ? VigenereCipher.decrypt(convertToNumericKeySet(key), cipherText) : null;
             case VERNAM_CIPHER -> message = VernamCipher.encrypt(cipherText);
             case ONE_TIME_PAD -> message = OneTimePad.encrypt(cipherText);
-        }
-
-        if (message == null) {
-            message = "[Error in Decryption]";
         }
 
         return message;
@@ -63,5 +55,30 @@ public final class CryptoProcessor {
         }
 
         return numKey;
+    }
+
+    private static boolean tryConvertToNumericKey(final String key) {
+        try {
+            Integer.parseInt(key);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean tryConvertNumberKeySet(final String key) {
+        for (int i = 0; i < key.length(); i++){
+            tryConvertToNumericKey(String.valueOf(key.charAt(i)));
+        }
+        return true;
+    }
+
+    private static int[] convertToNumericKeySet(final String key) {
+        int[] numKeys = new int[key.length()];
+        for (int i = 0; i < key.length(); i++){
+            numKeys[i] = convertToNumericKey(String.valueOf(key.charAt(i)));
+        }
+
+        return numKeys;
     }
 }
