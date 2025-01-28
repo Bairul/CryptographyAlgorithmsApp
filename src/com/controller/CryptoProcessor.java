@@ -26,7 +26,7 @@ public final class CryptoProcessor {
         switch (alg) {
             case CAESAR_CIPHER -> cryptogram = tryConvertToNumericKey(key) ? CaesarCipher.encrypt(convertToNumericKey(key), plainText) : null;
             case VIGENERE_CIPHER -> cryptogram = tryConvertNumberKeySet(key) ? VigenereCipher.encrypt(convertToNumericKeySet(key), plainText) : null;
-            case VERNAM_CIPHER -> cryptogram = VernamCipher.encrypt(plainText);
+            case VERNAM_CIPHER -> cryptogram = tryConvertNumberKeySet(key) ? VernamCipher.encrypt(convertToNumericKeySet(key), plainText) : null;
             case ONE_TIME_PAD -> cryptogram = OneTimePad.encrypt(plainText);
         }
 
@@ -39,7 +39,7 @@ public final class CryptoProcessor {
         switch (alg) {
             case CAESAR_CIPHER -> message = tryConvertToNumericKey(key) ? CaesarCipher.decrypt(convertToNumericKey(key), cipherText) : null;
             case VIGENERE_CIPHER -> message = tryConvertNumberKeySet(key) ? VigenereCipher.decrypt(convertToNumericKeySet(key), cipherText) : null;
-            case VERNAM_CIPHER -> message = VernamCipher.encrypt(cipherText);
+            case VERNAM_CIPHER -> message = tryConvertNumberKeySet(key) ? VernamCipher.decrypt(convertToNumericKeySet(key), cipherText) : null;
             case ONE_TIME_PAD -> message = OneTimePad.encrypt(cipherText);
         }
 
