@@ -1,5 +1,8 @@
 package com.model;
 
+import com.model.enums.Algorithm;
+import com.model.enums.Option;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,8 +23,8 @@ public final class MyUtil {
 
     private static String[] getAllAlgorithmDescriptions() {
         return new String[] {
-                "This is caesar cipher",
-                "This is vigenere cipher",
+                "Takes in a numeric key. Shifts each character in the message by the key.",
+                "Takes in a numeric key of any length. Shifts each character in the message by each digit of the key.",
                 "This is vernam cipher",
                 "This is one time pad"
         };

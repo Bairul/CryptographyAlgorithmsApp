@@ -1,8 +1,6 @@
 package com.view;
 
 import com.controller.CryptoProcessor;
-import com.model.Algorithm;
-import com.model.Option;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

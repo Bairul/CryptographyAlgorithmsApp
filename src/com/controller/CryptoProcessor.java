@@ -1,7 +1,7 @@
 package com.controller;
 
-import com.model.Algorithm;
-import com.model.Option;
+import com.model.enums.Algorithm;
+import com.model.enums.Option;
 import com.model.ciphers.symmetric.CaesarCipher;
 import com.model.ciphers.symmetric.OneTimePad;
 import com.model.ciphers.symmetric.VernamCipher;

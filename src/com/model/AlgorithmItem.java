@@ -1,5 +1,7 @@
 package com.model;
 
+import com.model.enums.Algorithm;
+
 public class AlgorithmItem {
     private final String name;
     private final String description;

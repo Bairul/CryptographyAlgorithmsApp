@@ -1,9 +1,9 @@
 package com.view;
 
-import com.model.Algorithm;
+import com.model.enums.Algorithm;
 import com.model.AlgorithmItem;
 import com.model.MyUtil;
-import com.model.Option;
+import com.model.enums.Option;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +23,7 @@ public class OptionsComponent extends JComponent {
     private Algorithm selectedAlgorithm;
     private Option selectedOption;
 
-    public OptionsComponent(final JLabel descriptionLabel, final JPanel radioPanel, OutputItems outputItems) {
+    public OptionsComponent(final JTextArea descriptionText, final JPanel radioPanel, OutputItems outputItems) {
         setLayout(new FlowLayout());
         this.radioPanel = radioPanel;
         this.outputItems = outputItems;
@@ -49,13 +49,13 @@ public class OptionsComponent extends JComponent {
                 selectedAlgorithm = selected.getAlgorithm();
             }
 
-            descriptionLabel.setText(selected.getDescription());
+            descriptionText.setText(selected.getDescription());
             updateRadioPanel();
         });
 
         // default to first dropdown
         selectedAlgorithm = Algorithm.CAESAR_CIPHER;
-        descriptionLabel.setText(optionsComboBox.getItemAt(0).getDescription());
+        descriptionText.setText(optionsComboBox.getItemAt(0).getDescription());
 
         // Panel for dropdown and description
         add(optionsComboBox);

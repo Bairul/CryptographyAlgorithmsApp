@@ -10,7 +10,7 @@ public class Display extends JFrame {
     private final JTextArea keyTextField;
     private final JTextArea outputTextArea;
     private final JPanel radioPanel;
-    private final JLabel dropdownDescription;
+    private final JTextArea dropdownDescription;
     private OptionsComponent dropdownPanel;
 
     public Display() {
@@ -19,7 +19,7 @@ public class Display extends JFrame {
         messageTextField = new JTextArea();
         keyTextField = new JTextArea();
         outputTextArea = new JTextArea();
-        dropdownDescription = new JLabel();
+        dropdownDescription = new JTextArea();
         radioPanel = new JPanel();
         radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.X_AXIS));
 
@@ -50,6 +50,14 @@ public class Display extends JFrame {
         swapButton.setEnabled(false);
 
         OutputItems outputItems = new OutputItems(outputTextArea, exportButton, swapButton);
+
+        dropdownDescription.setEditable(false);
+        dropdownDescription.setLineWrap(true);
+        dropdownDescription.setWrapStyleWord(true);
+
+        Dimension size = new Dimension(250, 60);
+        dropdownDescription.setSize(size);
+        dropdownDescription.setPreferredSize(size);
         dropdownPanel = new OptionsComponent(dropdownDescription, radioPanel, outputItems);
 
         processButton.addActionListener(new ProcessButtonListener(messageTextField, keyTextField, dropdownPanel, outputItems));
@@ -139,9 +147,6 @@ public class Display extends JFrame {
         keyPanel.add(keyInstructionLabel, BorderLayout.NORTH);
         keyPanel.add(keyScrollPane, BorderLayout.CENTER);
         keyPanel.add(keyFileUploadPanel, BorderLayout.SOUTH);
-
-        dropdownDescription.setSize(new Dimension(200, 50));
-        dropdownDescription.setPreferredSize(new Dimension(200, 50));
 
         gbc.gridx = 0;
         gbc.gridy = 0;
