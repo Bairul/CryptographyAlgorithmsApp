@@ -6,11 +6,13 @@ public class OutputItems {
 
     final JTextArea outputTextArea;
     final JButton exportButton;
-    final JButton swapButton;
+    final JButton swapOutputInputButton;
+    final JButton swapOutputPasswordButton;
 
-    public OutputItems(JTextArea outputTextArea, JButton exportButton, JButton swapButton) {
+    public OutputItems(JTextArea outputTextArea, JButton exportButton, JButton swapOutputInputButton, JButton swapOutputPasswordButton) {
         this.outputTextArea = outputTextArea;
         this.exportButton = exportButton;
-        this.swapButton = swapButton;
+        this.swapOutputInputButton = swapOutputInputButton;
+        this.swapOutputPasswordButton = swapOutputPasswordButton;
     }
 }

@@ -1,6 +1,7 @@
 package com.view;
 
 import com.controller.CryptoProcessor;
+import com.model.enums.Option;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +28,7 @@ public class ProcessButtonListener implements ActionListener {
         if (messageText.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Input cannot be empty", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
-        } else if (keyText.isEmpty()) {
+        } else if (optionsDropdown.getSelectedOption() != Option.GEN_KEY && keyText.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Password cannot be empty", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -40,7 +41,8 @@ public class ProcessButtonListener implements ActionListener {
         } else {
             outputItems.outputTextArea.setText(outputText);
             outputItems.exportButton.setEnabled(true);
-            outputItems.swapButton.setEnabled(true);
+            outputItems.swapOutputInputButton.setEnabled(true);
+            outputItems.swapOutputPasswordButton.setEnabled(true);
         }
     }
 }

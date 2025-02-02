@@ -1,7 +1,8 @@
-package com.model.ciphers.symmetric;
+package com.model.symmetric.stream;
 
 public class VernamCipher {
     public static String encrypt(final int[] keys, final String plainText) {
+        System.out.println(keys.length == plainText.length());
         StringBuilder cipherText = new StringBuilder(plainText.length());
 
         for (int i = 0; i < plainText.length(); i++) {
@@ -12,6 +13,7 @@ public class VernamCipher {
     }
 
     public static String decrypt(final int[] keys, final String cipherText) {
+        System.out.println(keys.length == cipherText.length());
         StringBuilder decryptedText = new StringBuilder(cipherText.length());
 
         for (int i = 0; i < cipherText.length(); i++) {

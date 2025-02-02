@@ -45,11 +45,13 @@ public class Display extends JFrame {
 
         JButton processButton = new JButton("Process Input");
         JButton exportButton = new JButton("Export Output as .txt");
-        JButton swapButton = new JButton("Set Output as Input");
+        JButton swapOutputInputButton = new JButton("Set Output as Input");
+        JButton swapOutputPasswordButton = new JButton("Set Output as Password");
         exportButton.setEnabled(false);
-        swapButton.setEnabled(false);
+        swapOutputInputButton.setEnabled(false);
+        swapOutputPasswordButton.setEnabled(false);
 
-        OutputItems outputItems = new OutputItems(outputTextArea, exportButton, swapButton);
+        OutputItems outputItems = new OutputItems(outputTextArea, exportButton, swapOutputInputButton, swapOutputPasswordButton);
 
         dropdownDescription.setEditable(false);
         dropdownDescription.setLineWrap(true);
@@ -62,16 +64,25 @@ public class Display extends JFrame {
 
         processButton.addActionListener(new ProcessButtonListener(messageTextField, keyTextField, dropdownPanel, outputItems));
         exportButton.addActionListener(new ExportFileButtonListener(outputTextArea));
-        swapButton.addActionListener(e -> {
+        swapOutputInputButton.addActionListener(e -> {
             messageTextField.setText(outputTextArea.getText());
             outputTextArea.setText("");
             exportButton.setEnabled(false);
-            swapButton.setEnabled(false);
+            swapOutputInputButton.setEnabled(false);
+            swapOutputPasswordButton.setEnabled(false);
+        });
+        swapOutputPasswordButton.addActionListener(e -> {
+            keyTextField.setText(outputTextArea.getText());
+            outputTextArea.setText("");
+            exportButton.setEnabled(false);
+            swapOutputInputButton.setEnabled(false);
+            swapOutputPasswordButton.setEnabled(false);
         });
 
         buttonPanel.add(processButton);
         buttonPanel.add(exportButton);
-        buttonPanel.add(swapButton);
+        buttonPanel.add(swapOutputInputButton);
+        buttonPanel.add(swapOutputPasswordButton);
 
         return buttonPanel;
     }

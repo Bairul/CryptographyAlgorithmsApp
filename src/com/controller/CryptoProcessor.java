@@ -2,10 +2,10 @@ package com.controller;
 
 import com.model.enums.Algorithm;
 import com.model.enums.Option;
-import com.model.ciphers.symmetric.CaesarCipher;
-import com.model.ciphers.symmetric.OneTimePad;
-import com.model.ciphers.symmetric.VernamCipher;
-import com.model.ciphers.symmetric.VigenereCipher;
+import com.model.symmetric.stream.CaesarCipher;
+import com.model.symmetric.stream.OneTimePad;
+import com.model.symmetric.stream.VernamCipher;
+import com.model.symmetric.stream.VigenereCipher;
 
 public final class CryptoProcessor {
     public static String process(final Algorithm alg, final Option opt, final String key, final String input) {
@@ -13,6 +13,7 @@ public final class CryptoProcessor {
             case MAC -> "Mac'ed";
             case ENCRYPT -> encrypt(alg, key, input);
             case DECRYPT -> decrypt(alg, key, input);
+            case GEN_KEY -> generateRandomKeyOfLength(input.length());
             case GEN_KEYPAIR -> "keypair generated";
             case ENCRYPT_EC -> "encrypted using elliptic curve";
             case DECRYPT_EC -> "decrypted using elliptic curve";
@@ -27,7 +28,7 @@ public final class CryptoProcessor {
             case CAESAR_CIPHER -> cryptogram = tryConvertToNumericKey(key) ? CaesarCipher.encrypt(convertToNumericKey(key), plainText) : null;
             case VIGENERE_CIPHER -> cryptogram = tryConvertNumberKeySet(key) ? VigenereCipher.encrypt(convertToNumericKeySet(key), plainText) : null;
             case VERNAM_CIPHER -> cryptogram = tryConvertNumberKeySet(key) ? VernamCipher.encrypt(convertToNumericKeySet(key), plainText) : null;
-            case ONE_TIME_PAD -> cryptogram = OneTimePad.encrypt(plainText);
+            case ONE_TIME_PAD -> cryptogram = key.length() == plainText.length() && tryConvertNumberKeySet(key) ? OneTimePad.encrypt(convertToNumericKeySet(key), plainText) : null;
         }
 
         return cryptogram;
@@ -40,7 +41,7 @@ public final class CryptoProcessor {
             case CAESAR_CIPHER -> message = tryConvertToNumericKey(key) ? CaesarCipher.decrypt(convertToNumericKey(key), cipherText) : null;
             case VIGENERE_CIPHER -> message = tryConvertNumberKeySet(key) ? VigenereCipher.decrypt(convertToNumericKeySet(key), cipherText) : null;
             case VERNAM_CIPHER -> message = tryConvertNumberKeySet(key) ? VernamCipher.decrypt(convertToNumericKeySet(key), cipherText) : null;
-            case ONE_TIME_PAD -> message = OneTimePad.encrypt(cipherText);
+            case ONE_TIME_PAD -> message = key.length() == cipherText.length() && tryConvertNumberKeySet(key) ? OneTimePad.decrypt(convertToNumericKeySet(key), cipherText) : null;
         }
 
         return message;
@@ -80,5 +81,13 @@ public final class CryptoProcessor {
         }
 
         return numKeys;
+    }
+
+    private static String generateRandomKeyOfLength(final int length) {
+        StringBuilder key = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            key.append((int) (Math.random() * 10));
+        }
+        return key.toString();
     }
 }

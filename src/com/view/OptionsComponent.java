@@ -1,5 +1,6 @@
 package com.view;
 
+import com.controller.AlgorithmInfo;
 import com.model.enums.Algorithm;
 import com.model.AlgorithmItem;
 import com.model.MyUtil;
@@ -17,7 +18,7 @@ public class OptionsComponent extends JComponent {
     private final ButtonGroup radioGroup;
     private final OutputItems outputItems;
 
-    private final Map<Algorithm, Option[]> optionsMap = MyUtil.getAlgorithmOptions();
+    private final Map<Algorithm, Option[]> optionsMap = AlgorithmInfo.getAlgorithmOptions();
     private final Map<Option, JRadioButton> optionsButtonsMap;
 
     private Algorithm selectedAlgorithm;
@@ -45,7 +46,8 @@ public class OptionsComponent extends JComponent {
             if (selected.getAlgorithm() != selectedAlgorithm) {
                 outputItems.outputTextArea.setText("");
                 outputItems.exportButton.setEnabled(false);
-                outputItems.swapButton.setEnabled(false);
+                outputItems.swapOutputInputButton.setEnabled(false);
+                outputItems.swapOutputPasswordButton.setEnabled(false);
                 selectedAlgorithm = selected.getAlgorithm();
             }
 

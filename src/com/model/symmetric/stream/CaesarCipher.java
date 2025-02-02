@@ -1,4 +1,4 @@
-package com.model.ciphers.symmetric;
+package com.model.symmetric.stream;
 
 public final class CaesarCipher {
     public static String encrypt(final int key, final String plainText) {

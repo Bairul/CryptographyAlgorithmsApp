@@ -1,4 +1,4 @@
-package com.model.ciphers.symmetric;
+package com.model.symmetric.stream;
 
 public class VigenereCipher {
     public static String encrypt(final int[] keys, final String plainText) {
